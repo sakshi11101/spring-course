@@ -22,7 +22,7 @@ public class JobRestController {
     @Autowired
     private JobService jobService;
 
-    @RequestMapping("jobPosts")
+    @RequestMapping(path = "jobPosts", produces = {"application/json"})
     public List<JobPost> getAllJobPosts() {
         return jobService.getAllJobs();
     }
@@ -49,3 +49,15 @@ public class JobRestController {
         return "Job deleted with postId: " + postId;
     }
 }
+
+/* 1. Jackson library is what java by default uses to convert java objects into JSON, it will not by
+default convert to XML or any other format, instead then have to use Jackson-XML library from maven
+In postman, under headers, the key is "accept" and value is "application/json" or "application/xml"
+or whatever content you want. */
+
+/* 2. How to specify that data to be sent to client will only be json format and not any other format, so in
+ request mapping where url path is specify, add produces key as well with "application/json" or "application/xml"
+ data to sent and vice versa to specify what type of content to accept, use consumes and on client side from
+  postman under headers, the key is content. */
+
+
