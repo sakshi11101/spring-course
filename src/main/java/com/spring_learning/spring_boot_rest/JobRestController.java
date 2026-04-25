@@ -27,9 +27,15 @@ public class JobRestController {
         return jobService.getAllJobs();
     }
 
-    @GetMapping("jobPost/{postId}")
+    @GetMapping("jobPosts/{postId}")
     public JobPost getJob(@PathVariable int postId) {  //PathVariable is to tell the spring that hey check for variables inside URL mentioned.
         return jobService.getJob(postId);
+    }
+
+    //Added a get(or by user experience "search" functionality based on a given keyword)
+    @GetMapping("jobPosts/keyword/{keyword}")
+    public List<JobPost> searchByKeyword(@PathVariable("keyword") String keyword) {
+        return jobService.search(keyword, keyword);
     }
 
     @PostMapping("jobPost")
@@ -47,6 +53,13 @@ public class JobRestController {
     public String deleteJob(@PathVariable int postId) {
         jobService.deleteJob(postId);
         return "Job deleted with postId: " + postId;
+    }
+
+    //Just one time method for initial load.
+    @GetMapping("load")
+    public String loadData() {
+        jobService.load();
+        return "Initial JobPosts load is a success";
     }
 }
 
